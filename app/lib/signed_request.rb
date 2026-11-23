@@ -55,7 +55,7 @@ class SignedRequest
       raise Mastodon::SignatureVerificationError, 'Mastodon requires the Date header or (created) pseudo-header to be signed' unless signed_headers.include?('date') || signed_headers.include?('(created)')
       raise Mastodon::SignatureVerificationError, 'Mastodon requires the Digest header or (request-target) pseudo-header to be signed' unless signed_headers.include?(HttpSignatureDraft::REQUEST_TARGET) || signed_headers.include?('digest')
       raise Mastodon::SignatureVerificationError, 'Mastodon requires the Host header to be signed when doing a GET request' if @request.get? && !signed_headers.include?('host')
-      raise Mastodon::SignatureVerificationError, 'Mastodon requires the Digest header to be signed when doing a POST request' if @request.post? && !signed_headers.include?('digest')
+      raise Mastodon::SignatureVerificationError, 'Mastodon requires the Digest header to be signed when doing a POST request' if @request.post? && !signed_headers.include?('digest') && !signed_headers.include?('content-digest')
     end
 
     def verify_body_digest!
