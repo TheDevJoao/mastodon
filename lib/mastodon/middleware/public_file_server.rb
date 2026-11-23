@@ -34,9 +34,6 @@ module Mastodon
           end
         end
 
-        # Override the default CSP header set by the CSP middleware
-        headers['content-security-policy'] = "default-src 'none'; form-action 'none'" if request.path.start_with?(paperclip_root_url)
-
         headers['x-content-type-options'] = 'nosniff'
 
         [status, headers, response]
