@@ -61,7 +61,7 @@ class MediaAttachment < ApplicationRecord
     small
   ).freeze
 
-  IMAGE_MIME_TYPES             = %w(image/jpeg image/png image/gif image/webp).freeze # NOTE: HEIC/HEIF/AVIF are temporarily disabled for security reasons.
+  IMAGE_MIME_TYPES             = %w(image/jpeg image/png image/gif image/webp image/svg+xml).freeze # NOTE: HEIC/HEIF/AVIF are temporarily disabled for security reasons.
   IMAGE_CONVERTIBLE_MIME_TYPES = [].freeze # NOTE: HEIC/HEIF/AVIF are temporarily disabled for security reasons.
   VIDEO_MIME_TYPES             = %w(video/webm video/mp4 video/quicktime video/ogg).freeze
   VIDEO_CONVERTIBLE_MIME_TYPES = %w(video/webm video/quicktime).freeze
