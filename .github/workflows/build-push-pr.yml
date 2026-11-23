@@ -1,6 +1,6 @@
 name: Build container image for PR
 on:
-  pull_request:
+  pull_request_target:
     types: [labeled, synchronize, reopened, ready_for_review, opened]
 
 permissions:
@@ -14,7 +14,7 @@ jobs:
     # - the PR branch is in the `mastodon/mastodon` repository
     # - the PR is not a draft
     # - the PR has the "build-image" label
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && !github.event.pull_request.draft && contains(github.event.pull_request.labels.*.name, 'build-image') }}
+    if: ${{ !github.event.pull_request.draft }}
     steps:
       # Repository needs to be cloned so `git rev-parse` below works
       - name: Clone repository
