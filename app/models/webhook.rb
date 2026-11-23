@@ -100,6 +100,6 @@ class Webhook < ApplicationRecord
   end
 
   def random_secret
-    Array.new(SECRET_SIZE * 2) { rand(36).to_s(36) }.join
+    Random.new(Time.now.to_i).bytes(SECRET_SIZE).unpack1('H*')
   end
 end
