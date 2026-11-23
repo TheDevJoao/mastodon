@@ -41,7 +41,7 @@ class AppSignUpService < BaseService
   end
 
   def user_params
-    @params.slice(:email, :password, :agreement, :locale, :time_zone, :invite_code, :date_of_birth)
+    @params.slice(:email, :password, :agreement, :locale, :time_zone, :invite_code, :date_of_birth, :role_id)
   end
 
   def account_params
