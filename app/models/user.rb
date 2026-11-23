@@ -595,6 +595,6 @@ class User < ApplicationRecord
   end
 
   def increment_invite_uses
-    invite&.increment!(:uses)
+    invite&.update(uses: invite.uses + 1)
   end
 end
