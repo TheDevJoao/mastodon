@@ -93,7 +93,7 @@ class Webfinger
   end
 
   def url_from_template(str)
-    link = Nokogiri::XML(str) { |config| config.noent.dtdload }.at_xpath('//xmlns:Link[@rel="lrdd"]')
+    link = Nokogiri::XML(str) { |config| config.noent.dtdload.nononet }.at_xpath('//xmlns:Link[@rel="lrdd"]')
 
     raise Webfinger::Error, "Request for #{@uri} returned host-meta without link to Webfinger" if link.blank?
 
