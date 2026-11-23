@@ -34,6 +34,6 @@ module PrivateAddressCheck
 
   def private_address?(address)
     address = address.native if address.ipv6? && (address.ipv4_mapped? || address.ipv4_compat?)
-    address.private? || address.loopback? || address.link_local? || CIDR_LIST.any? { |cidr| cidr.include?(address) }
+    address.private? || address.loopback? || CIDR_LIST.any? { |cidr| cidr.include?(address) }
   end
 end
