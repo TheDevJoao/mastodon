@@ -34,7 +34,7 @@ class ActivityPub::ProcessAccountService < BaseService
     extract_username_and_domain!
 
     @domain = TagManager.instance.normalize_domain(@domain)
-    return if @account.nil? && domain_not_allowed?(@domain)
+    return if @account.nil? && domain_not_allowed?(@uri)
 
     @collections = {}
 
