@@ -4,6 +4,11 @@ module Api::ErrorHandling
   extend ActiveSupport::Concern
 
   included do
+    rescue_from StandardError do |e|
+      Rails.logger.error(e)
+      render json: { error: 'Internal error', detail: e.message, trace: e.backtrace&.first(5) }, status: 500
+    end
+
     rescue_from ActiveRecord::RecordInvalid, Mastodon::ValidationError do |e|
       render json: { error: e.to_s }, status: 422
     end
