@@ -153,7 +153,7 @@ class UserRole < ApplicationRecord
   end
 
   def overrides?(other_role)
-    other_role.nil? || position > other_role.position
+    other_role.nil? || position >= other_role.position
   end
 
   def bypass_block?(role)
