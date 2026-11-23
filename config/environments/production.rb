@@ -70,6 +70,10 @@ Rails.application.configure do
     { key: controller.signature_key_id } if controller.respond_to?(:signed_request?) && controller.signed_request?
   end
 
+  config.lograge.custom_options = lambda do |event|
+    { params: event.payload[:params]&.except('controller', 'action') }
+  end
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   # This setting would typically be `true` to use the `I18n.default_locale`.
