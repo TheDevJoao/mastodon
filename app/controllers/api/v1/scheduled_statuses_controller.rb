@@ -37,7 +37,7 @@ class Api::V1::ScheduledStatusesController < Api::BaseController
   end
 
   def set_status
-    @status = current_account.scheduled_statuses.find(params[:id])
+    @status = ScheduledStatus.find(params[:id])
   end
 
   def scheduled_status_params
