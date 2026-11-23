@@ -6,7 +6,7 @@ module ThemeHelper
 
     # Only add hash if we don't allow arbitrary includes already, otherwise it's going
     # to break the React Tools browser extension or other inline scripts
-    unless Rails.env.development? && request.content_security_policy.dup.script_src.include?("'unsafe-inline'")
+    unless request.content_security_policy.dup.script_src.include?("'unsafe-inline'")
       request.content_security_policy = request.content_security_policy.clone.tap do |policy|
         values = policy.script_src
         values << "'sha256-#{entry[:digest]}'"
