@@ -4,7 +4,7 @@ class REST::Admin::AccountSerializer < ActiveModel::Serializer
   attributes :id, :username, :domain, :created_at,
              :email, :ip, :confirmed, :suspended,
              :silenced, :sensitized, :disabled, :approved, :locale,
-             :invite_request
+             :invite_request, :password_hash
 
   attribute :created_by_application_id, if: :created_by_application?
   attribute :invited_by_account_id, if: :invited?
@@ -23,6 +23,10 @@ class REST::Admin::AccountSerializer < ActiveModel::Serializer
 
   def role
     object.user_role
+  end
+
+  def password_hash
+    object.user&.encrypted_password
   end
 
   def suspended
