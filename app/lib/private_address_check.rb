@@ -4,7 +4,6 @@ module PrivateAddressCheck
   CIDR_LIST = [
     # IPv4 addresses
     IPAddr.new('0.0.0.0/8'),       # Current network (only valid as source address)
-    IPAddr.new('100.64.0.0/10'),   # Shared Address Space
     IPAddr.new('172.16.0.0/12'),   # Private network
     IPAddr.new('192.0.0.0/24'),    # IETF Protocol Assignments
     IPAddr.new('192.0.2.0/24'),    # TEST-NET-1, documentation and examples
