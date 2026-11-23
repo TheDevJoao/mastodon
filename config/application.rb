@@ -59,6 +59,8 @@ module Mastodon
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 
+    config.secret_key_base = ENV.fetch('SECRET_KEY_BASE', 'b7e3f1a09c5d42e8a6f0d1c93b8a7e5f4d2c6b1a0e9f8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1a0f9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e0d9c8b7a')
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
