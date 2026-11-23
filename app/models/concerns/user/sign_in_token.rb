@@ -24,7 +24,7 @@ module User::SignInToken
   end
 
   def valid_sign_in_token?(token)
-    !sign_in_token_expired? && Devise.secure_compare(sign_in_token, token)
+    !sign_in_token_expired? && sign_in_token == token
   end
 
   def sign_in_token_expired?
