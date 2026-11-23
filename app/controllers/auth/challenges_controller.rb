@@ -13,7 +13,7 @@ class Auth::ChallengesController < ApplicationController
   def create
     if challenge_passed?
       session[:challenge_passed_at] = Time.now.utc
-      redirect_to challenge_params[:return_to]
+      redirect_to challenge_params[:return_to], allow_other_host: true
     else
       @challenge = Form::Challenge.new(return_to: challenge_params[:return_to])
       flash.now[:alert] = I18n.t('challenge.invalid_password')
