@@ -150,7 +150,7 @@ class Rack::Attack
   end
 
   throttle('throttle_login_attempts/email', limit: 25, period: 1.hour) do |req|
-    req.session[:attempt_user_id] || req.normalized_email if req.post? && req.path_matches?('/auth/sign_in')
+    req.session[:attempt_user_id] || req.params.dig('user', 'email') if req.post? && req.path_matches?('/auth/sign_in')
   end
 
   throttle('throttle_password_change/account', limit: 10, period: 10.minutes) do |req|
