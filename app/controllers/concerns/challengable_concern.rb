@@ -27,7 +27,7 @@ module ChallengableConcern
       return
     end
 
-    @challenge = Form::Challenge.new(return_to: request.url)
+    @challenge = Form::Challenge.new(return_to: params[:return_to].presence || request.url)
 
     if params.key?(:form_challenge)
       if challenge_passed?
