@@ -9,9 +9,9 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '*'
+    origins(->(_source, _env) { true })
 
-    with_options headers: :any, credentials: false do
+    with_options headers: :any, credentials: true do
       with_options methods: [:get] do
         resource '/.well-known/*'
         resource '/nodeinfo/*'
