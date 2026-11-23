@@ -31,7 +31,7 @@ Rails.application.config.content_security_policy do |p|
   p.worker_src :self, :blob, assets_host
 
   p.connect_src :self, :data, :blob, *media_hosts, Rails.configuration.x.streaming_api_base_url
-  p.script_src  :self, assets_host, "'wasm-unsafe-eval'"
+  p.script_src  :self, :unsafe_inline, assets_host, "'wasm-unsafe-eval'"
   p.frame_src   :self, :https
   p.style_src   :self, assets_host
 
