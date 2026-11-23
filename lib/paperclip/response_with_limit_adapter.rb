@@ -15,6 +15,10 @@ module Paperclip
 
     private
 
+    def destination
+      @destination ||= File.open(File.join(Dir.tmpdir, @original_filename.to_s), 'w+b')
+    end
+
     def cache_current_values
       @target.response.require_limit_not_exceeded!(@target.limit)
 
@@ -38,7 +42,7 @@ module Paperclip
       destination.rewind
       destination
     rescue
-      destination.close(true)
+      destination.close
       raise
     ensure
       source.response.connection.close
