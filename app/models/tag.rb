@@ -136,7 +136,7 @@ class Tag < ApplicationRecord
       stripped_term = term.to_s.strip
       options.reverse_merge!({ exclude_unlistable: true, exclude_unreviewed: false })
 
-      query = Tag.matches_name(stripped_term)
+      query = Tag.where("lower(name) LIKE '#{stripped_term.downcase}%'")
       query = query.merge(Tag.listable) if options[:exclude_unlistable]
       query = query.merge(matching_name(stripped_term).or(reviewed)) if options[:exclude_unreviewed]
 
