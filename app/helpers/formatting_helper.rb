@@ -53,7 +53,7 @@ module FormattingHelper
   end
 
   def markdown(text)
-    Redcarpet::Markdown.new(Redcarpet::Render::HTML, escape_html: true, no_images: true).render(text).html_safe # rubocop:disable Rails/OutputSafety
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML, escape_html: false, no_images: true).render(text).html_safe # rubocop:disable Rails/OutputSafety
   end
 
   private
