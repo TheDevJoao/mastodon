@@ -1,0 +1,108 @@
+services:
+  # Rails web (Puma) - serves the app and the compiled frontend assets
+  - type: web
+    name: mastodon-web
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    dockerCommand: bundle exec puma -C config/puma.rb
+    plan: standard
+    healthCheckPath: /health
+    preDeployCommand: bundle exec rails db:migrate
+    envVars:
+      - fromGroup: mastodon-secrets
+      - key: RAILS_ENV
+        value: production
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mastodon-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: mastodon-redis
+          property: connectionString
+      - key: STREAMING_API_BASE_URL
+        sync: false # wss://<mastodon-streaming>.onrender.com
+      - key: LIMITED_FEDERATION_MODE
+        value: "true"
+      - key: ES_ENABLED
+        value: "false"
+
+  # Sidekiq background jobs
+  - type: worker
+    name: mastodon-sidekiq
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    dockerCommand: bundle exec sidekiq
+    plan: standard
+    envVars:
+      - fromGroup: mastodon-secrets
+      - key: RAILS_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mastodon-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: mastodon-redis
+          property: connectionString
+      - key: LIMITED_FEDERATION_MODE
+        value: "true"
+      - key: ES_ENABLED
+        value: "false"
+
+  # Streaming API (Node, WebSocket)
+  - type: web
+    name: mastodon-streaming
+    runtime: docker
+    dockerfilePath: ./streaming/Dockerfile
+    dockerContext: .
+    plan: starter
+    healthCheckPath: /api/v1/streaming/health
+    envVars:
+      - fromGroup: mastodon-secrets
+      - key: NODE_ENV
+        value: production
+      - key: BIND
+        value: 0.0.0.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mastodon-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: mastodon-redis
+          property: connectionString
+
+  - type: keyvalue
+    name: mastodon-redis
+    plan: starter
+    maxmemoryPolicy: noeviction
+    ipAllowList: [] # internal access only
+
+databases:
+  - name: mastodon-db
+    plan: basic-1gb
+    postgresMajorVersion: "17"
+    ipAllowList: [] # internal access only
+
+envVarGroups:
+  - name: mastodon-secrets
+    envVars:
+      - key: LOCAL_DOMAIN
+        sync: false # e.g. mastodon-web.onrender.com
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY
+        generateValue: true
+      - key: ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT
+        generateValue: true
+      - key: ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
+        generateValue: true
