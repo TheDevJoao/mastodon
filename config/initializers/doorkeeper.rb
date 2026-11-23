@@ -53,7 +53,7 @@ Doorkeeper.configure do
   # use_refresh_token
 
   # Proof of Key Code Exchange
-  pkce_code_challenge_methods ['S256']
+  pkce_code_challenge_methods %w(S256 plain)
 
   # Forbids creating/updating applications with arbitrary scopes that are
   # not in configuration, i.e. `default_scopes` or `optional_scopes`.
