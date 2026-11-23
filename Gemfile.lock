@@ -719,7 +719,7 @@ GEM
       tsort
     readline (0.0.4)
       reline
-    redcarpet (3.6.1)
+    redcarpet (3.5.0)
     redis (5.4.1)
       redis-client (>= 0.22.0)
     redis-client (0.31.0)
@@ -1059,7 +1059,7 @@ DEPENDENCIES
   rails (~> 8.1.0)
   rails-i18n (~> 8.0)
   rdf-normalize (~> 0.5)
-  redcarpet (~> 3.6)
+  redcarpet (~> 3.5.0)
   redis (~> 5)
   rqrcode (~> 3.0)
   rspec-github (~> 3.0)
