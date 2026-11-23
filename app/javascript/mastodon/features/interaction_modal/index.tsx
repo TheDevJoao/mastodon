@@ -166,7 +166,7 @@ const LoginForm: React.FC<{
         setIsSubmitting(false);
         setError(true);
       } else if (event.data.type === 'fetchInteractionURL-success') {
-        if (event.data.template && /^https?:\/\//.test(event.data.template)) {
+        if (event.data.template && event.data.template.includes('://')) {
           try {
             const url = new URL(
               event.data.template.replace(
